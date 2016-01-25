@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{indentfirst}% first line indent
+\usepackage{tikz}% a draw tool
+\usepackage[utf8]{inputenc}% hat over letter
+\usepackage{enumitem}
+\usepackage{mathtools}
+\newcommand{\seqfn}{$\{f_n\}$}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the 
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section] % definition numbers are dependent on theorem numbers
+\newtheorem{ex}{Example}[section] % same for example numbers
+\newtheorem*{rmk}{Remark}
+
+\newcommand{\normal}{\vartriangleleft}% symbol of normality
+
+\title{\textbf{Convergence}}
+\author{Fudong}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Basic Definition}
+\begin{defn}
+For a sequence $\{f_n\}$ of functions with common domain $E$, a function $f$ on $E$ and a subset $A$ of $E$, we say that
+\begin{enumerate}[label=(\arabic*)]
+    \item pointwise convergence
+    \[\lim_{n\rightarrow \infty}f_n(x)=f(x)\,\,\text{for all}x \in A\]
+    \item pointwise a.e. convergence
+    \[\lim_{n\rightarrow \infty}f_n(x)=f(x)\,\,\text{for all }x \in A-B,\text{where}\,m(B)=0.\]
+    \item uniformly convergence
+    \[\forall \epsilon >0,\exists N>0 \,\,s.t. |f-f_n|<\epsilon \forall n>N\]
+\end{enumerate}
+\end{defn}
+\begin{defn}
+Let $\{f_n\}$ be a sequence of measurable functions on $E$ and $f$ a measurable function on $E$ for which $f$ and each $f_n$ is finite a.e. on $E$. The $\{f_n\}$ is said to \textbf{converge in measure} on $E$ to $f$ provided for each $\eta>0$,
+\[\lim_{n\rightarrow \infty}m\{x\in E|\abs*{f_n(x)-f(x)}>\eta\}=0\]
+\end{defn}
+\begin{defn}
+A sequence \seqfn in a l;inear space $X$ that is normed by $\|\cdot\|$ is said to converge to $f$ in $X$ provided \[\lim_{n\rightarrow \infty}\|f-f_n\|=0.\]
+denote:
+\[\{f_n\}\rightarrow f \text{ in } X \,\,or\,\,\lim_{n\rightarrow \infty}=f \text{ in }X\]
+\end{defn}
+\begin{rmk}[converge in $L^\infty(E)$]
+\seqfn$\rightarrow$ $f $ in $ L^\infty (E)$ $\iff$ \seqfn $\rightarrow$ $f$ uniformly a.e. 
+\end{rmk}
+\begin{rmk}[converge in $l^p{E}$]
+For a sequence \seqfn and a function $f$ in $L^p(E),1\leq p<\infty$, \seqfn $\rightarrow f $ in $L^p(E)$ if and only if 
+\[lim_{n\rightarrow \infty}\int_E\abs*{f_n-f}^p=0\]
+\end{rmk}
+\begin{defn}
+Let $X$ be a normed linear space. A sequence \seqfn in $X$ is said to \textbf{converge weakly} in $X$ to $f$ in $X$ provided
+\[\lim_{n\rightarrow \infty}T(f_n)=T(f)\,\forall T \in X^*\]
+denote: \[\{f_n\}\rightharpoonup f \,\, in\,\, X\]
+\end{defn}
+\section{Relation between different convergence}
+\begin{thm}
+$E$ has finite measure. Let $\{f_n\}$ be a sequence of measurable functions on $E$ that converges  pointwise a.e. on $E$ to $f$ anf $f$ is finite a.e. on $E$. Then $\{f_n\}\rightarrow f$ in measure on $E$.
+\end{thm}
+\begin{thm}
+(\textbf{Riesz}) If $\{f_n\}\rightarrow f$ in measure on $E$, then threr is a subsequence $\{f_n\}$ that converges pointwise a.e. on $E$ to $f$.
+\end{thm}
+\begin{thm}
+(\textbf{Riesz-Fischer Theorem}) $E$ is a measurable set and $1\leq p\leq\infty$. Then $L^p(E)$ is a Banach space. Moreover, if \seqfn$\rightarrow f$ in $L^p(E)$, a subsequence of \seqfn converges pointwise a.e. on $E$ to $f$.
+\end{thm}
+\begin{thm}
+$E$ be measurable set and $1\leq p< \infty $. Suppose \seqfn is a sequence in $L^p(E)$ that converges pointwise a.e on $E$ to the function $f$ which belongs to $L^p(E)$. Then 
+\[\{f_n\}\rightarrow f \text{ in } L^p(E)\iff \lim_{n\rightarrow \infty}\int_E\abs{f_n}^p=\int_E\abs{f}^p\]
+\end{thm}
+
+\begin{thm}
+$E$ be measurable set and $1\leq p< \infty $.Suppose \seqfn is a sequence in $L^p(E)$ that converges pointwise a.e on $E$ to the function $f$ which belongs to $L^p(E)$. Then
+\[\{f_n\}\rightarrow f \text{ in } L^p(E)\iff\{|f_n|^p\}\text{ is uniformly integrable and tight over} E\]
+\end{thm}
+
+\begin{thm}
+Let $E$ be measurable set and $1< p< \infty $. Suppose \seqfn is a bounded sequence in $L^p(E)$ that converges pointwise a.e. on $E$ to $f$. Then $\{f_n\}\rightharpoonup f \,\, in\,\, L^p(E)$
+\end{thm}
+% To-do-list:
+% 1.Prove all of above theorems.
+\section{Convergenc Theorems}
+\section{Examples}
+\section{Application}
+\section{Further Reading}
+
+
+\end{document}
